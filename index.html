@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-i18n-title="uav.page_title">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title data-i18n="uav.page_title">无人驾驶航空器（UAV）教学门户 · Teacher Z</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:"Microsoft YaHei","PingFang SC",sans-serif;background:linear-gradient(135deg,#0a1628 0%,#1a3a5c 100%);color:#c8d6e5;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 20px}
+.header{text-align:center;margin-bottom:50px}
+.header h1{font-size:36px;color:#fff;margin-bottom:6px}
+.header h1 span{color:#5b9bd5}
+.header .sub{color:#667;font-size:15px;margin-top:8px}
+.header .motto-line{text-align:center;margin:10px 0 6px}
+.header .motto{font-size:16px;font-weight:600;letter-spacing:1px;display:inline}
+.header .motto-study{background:linear-gradient(135deg,#5b9bd5,#7fb8e0);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.nav{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;max-width:800px;width:100%}
+.card{background:rgba(13,31,53,.85);border:1px solid rgba(91,155,213,.15);border-radius:12px;padding:28px 20px;text-align:center;cursor:pointer;text-decoration:none;transition:all .35s;color:#c8d6e5}
+.card:hover{border-color:#5b9bd5;transform:translateY(-4px);box-shadow:0 8px 30px rgba(0,0,0,.4)}
+.card .icon{font-size:32px;margin-bottom:10px}
+.card .name{font-size:17px;font-weight:600;color:#e8e8e8;margin-bottom:4px}
+.card .desc{font-size:12px;color:#667}
+.footer{margin-top:60px;text-align:center;color:#445;font-size:12px;line-height:2}
+.footer a{color:#5b9bd5;text-decoration:none}
+.tagline{text-align:center;color:#5b9bd5;font-size:18px;letter-spacing:4px;margin:24px 0;font-weight:600}
+@media(max-width:768px){
+  body{padding:30px 12px;justify-content:flex-start}
+  .header{margin-bottom:30px}
+  .header h1{font-size:24px}
+  .header .sub{font-size:13px}
+  .nav{grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px}
+  .card{padding:20px 14px}
+  .card .icon{font-size:24px}
+  .card .name{font-size:15px}
+  .card .desc{font-size:11px}
+}
+</style>
+<script src="js/i18n.js"></script>
+</head>
+<body>
+
+<div class="header">
+  <h1 data-i18n="uav.title"><span data-i18n="uav.title_span">无人驾驶航空器教学门户</span></h1>
+  <div class="sub" data-i18n="uav.subtitle">Unmanned Aerial Vehicle (UAV) Teaching Portal · Teacher Z</div>
+  <div class="motto-line">
+    <span class="motto motto-study" data-i18n="uav.motto">「测绘·监测·教学·研究 —— 一条无人机实践脉络的多重收敛」</span>
+  </div>
+</div>
+
+<div class="nav">
+  <a class="card" href="迁移探索-无人机应用技术.html" style="border-color:rgba(230,126,34,.2)">
+    <div class="icon">🔄</div>
+    <div class="name" data-i18n="uav.card_selfstudy" style="color:#e67e22">师资自学路径</div>
+    <div class="desc" data-i18n="uav.card_selfstudy_desc">从土地管理到 UAV 教学的跨学科自学</div>
+  </a>
+  <a class="card" href="https://zhengwen69.github.io/cdu-gufei-web-demo/迁移探索.html" style="border-color:rgba(52,152,219,.2)" target="_blank">
+    <div class="icon">🌐</div>
+    <div class="name" data-i18n="uav.card_hub" style="color:#3498db">迁移探索总枢纽</div>
+    <div class="desc" data-i18n="uav.card_hub_desc">固废·智能转型·竹韵乐养 案例全景</div>
+  </a>
+</div>
+
+<div class="tagline" data-i18n="uav.tagline">知无界，法有常。</div>
+
+<div class="footer">
+  <p data-i18n="uav.footer_note">📖 NFSC+Agent 方法论 · 高职 UAV 教学迁移实证</p>
+  <p>
+    <a href="https://zhengwen69.github.io/cdu-gufei-web-demo/" target="_blank" data-i18n="uav.footer_link">← 返回固废课程主门户</a>
+  </p>
+  <p data-i18n="common.copyright">© 黄正文（点暇斋）· 全部作品版权登记</p>
+</div>
+
+</body>
+</html>
