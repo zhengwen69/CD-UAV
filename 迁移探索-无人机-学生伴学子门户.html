@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-i18n-title="transfer_uav_student.page_title">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title data-i18n="transfer_uav_student.page_title">迁移探索：UAV 学生伴学子门户</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  font-family:"Microsoft YaHei","PingFang SC",sans-serif;
+  background:#0a1628;color:#c8d6e5;min-height:100vh;
+}
+
+.sidebar{
+  position:fixed;left:0;top:0;width:220px;height:100vh;
+  background:#0d1f35;padding:30px 0;
+  border-right:1px solid rgba(91,155,213,.15);
+  display:flex;flex-direction:column;z-index:900;overflow-y:auto;
+}
+.sidebar h3{color:#5b9bd5;padding:0 20px;margin-bottom:6px;font-size:16px;line-height:1.5}
+.sidebar .nav-label{color:#556677;font-size:10px;letter-spacing:2px;padding:0 20px;margin-bottom:10px;text-transform:uppercase}
+.sidebar .nav-btn{
+  display:block;width:100%;padding:14px 20px;text-align:left;
+  background:none;border:none;color:#8899aa;cursor:pointer;
+  font-size:14px;transition:all .3s;border-left:3px solid transparent;
+  font-family:inherit;
+}
+.sidebar .nav-btn:hover{background:rgba(91,155,213,.08);color:#aabbcc}
+.sidebar .nav-btn.active{background:rgba(91,155,213,.12);color:#fff;border-left-color:#5b9bd5}
+.sidebar .nav-btn .emoji{margin-right:8px}
+
+.main{
+  margin-left:220px;padding:40px 50px;max-width:1100px;min-height:100vh;
+}
+.main h2{font-size:28px;color:#fff;margin-bottom:6px}
+.main h2 span{color:#5b9bd5}
+.main .page-sub{color:#667;font-size:14px;margin-bottom:40px}
+
+.module{margin-bottom:50px}
+.module h3{font-size:20px;color:#5b9bd5;margin-bottom:16px;padding-bottom:10px;border-bottom:1px solid rgba(91,155,213,.15)}
+.module h3 .emoji{margin-right:8px}
+
+.card{
+  background:rgba(13,31,53,.85);border:1px solid rgba(91,155,213,.1);
+  border-radius:12px;padding:22px 24px;margin-bottom:16px;
+  transition:all .3s;
+}
+.card:hover{border-color:rgba(91,155,213,.3);box-shadow:0 4px 20px rgba(0,0,0,.3)}
+.card p{font-size:14px;color:#aabbcc;line-height:1.9}
+
+/* Tables */
+table{width:100%;border-collapse:collapse;margin-top:12px;font-size:14px}
+th,td{padding:12px 14px;text-align:left;border:1px solid rgba(91,155,213,.1)}
+th{background:rgba(91,155,213,.1);color:#7fb8e0;font-weight:normal;white-space:nowrap}
+td{color:#aabbcc;line-height:1.7}
+tr:hover td{background:rgba(91,155,213,.04)}
+
+.privacy-note{color:#556677;font-size:11px;line-height:1.7;margin-bottom:6px}
+
+.footer{margin-top:50px;text-align:center;color:#445;font-size:12px;line-height:2;padding-bottom:20px}
+
+.back-btn{
+  position:fixed;top:20px;left:236px;z-index:1000;
+  padding:8px 16px;border-radius:8px;
+  background:rgba(13,31,53,.85);border:1px solid rgba(91,155,213,.2);
+  color:#7fb8e0;text-decoration:none;font-size:14px;
+  transition:all .3s;user-select:none;
+}
+.back-btn:hover{border-color:#5b9bd5;color:#fff;transform:translateY(-2px);box-shadow:0 4px 15px rgba(0,0,0,.4)}
+
+/* Category grid */
+.category-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
+.category-card{
+  background:rgba(13,31,53,.85);border:1px solid rgba(91,155,213,.1);
+  border-radius:10px;padding:18px 16px;position:relative;overflow:hidden;
+  transition:all .3s;
+}
+.category-card:hover{border-color:rgba(91,155,213,.3);box-shadow:0 4px 20px rgba(0,0,0,.25)}
+.category-card::before{
+  content:'';position:absolute;top:0;left:0;width:4px;height:100%;
+  border-radius:4px 0 0 4px;
+}
+.category-card.cat-orange::before{background:#e67e22}
+.category-card.cat-purple::before{background:#9b59b6}
+.category-card.cat-green::before{background:#2ecc71}
+.category-card.cat-blue::before{background:#5b9bd5}
+.category-card .cat-name{font-size:15px;font-weight:600;color:#fff;margin-bottom:8px;padding-left:4px}
+.category-card .cat-name .dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:8px;vertical-align:middle}
+.category-card .cat-courses{font-size:12px;color:#8899aa;line-height:1.8;padding-left:4px}
+.category-card .cat-courses div{margin-bottom:2px}
+
+/* Data cards */
+.data-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:12px}
+.data-card{
+  background:rgba(13,31,53,.85);border:1px solid rgba(91,155,213,.1);
+  border-radius:12px;padding:28px 20px;text-align:center;
+  transition:all .3s;
+}
+.data-card:hover{border-color:rgba(91,155,213,.3);box-shadow:0 4px 20px rgba(0,0,0,.3)}
+.data-card .data-icon{font-size:32px;margin-bottom:10px}
+.data-card .data-label{font-size:15px;font-weight:600;color:#e8e8e8;margin-bottom:10px}
+.data-card .data-placeholder{font-size:13px;color:#556677;line-height:1.7}
+
+/* Career cards */
+.career-grid{display:flex;gap:12px;margin-top:12px;overflow-x:auto}
+.career-card{
+  flex:1;min-width:140px;
+  background:rgba(13,31,53,.85);border:1px solid rgba(91,155,213,.1);
+  border-radius:12px;padding:22px 16px;text-align:center;
+  transition:all .3s;
+}
+.career-card:hover{border-color:#5b9bd5;transform:translateY(-3px);box-shadow:0 6px 24px rgba(0,0,0,.4)}
+.career-card .career-icon{font-size:28px;margin-bottom:8px}
+.career-card .career-name{font-size:14px;font-weight:600;color:#e8e8e8;margin-bottom:4px}
+.career-card .career-course{font-size:11px;color:#556677}
+
+.comparison-note{font-size:12px;color:#667;margin-top:12px;line-height:1.6}
+
+/* Mobile */
+@media (max-width:768px){
+  body{flex-direction:column}
+  .sidebar{
+    position:static;width:100%;height:auto;flex-direction:row;
+    overflow-x:auto;padding:10px 8px;border-right:none;
+    border-bottom:1px solid rgba(91,155,213,.15);
+  }
+  .sidebar h3{display:none}
+  .sidebar .nav-label{display:none}
+  .sidebar .nav-btn{
+    white-space:nowrap;border-left:none;border-bottom:3px solid transparent;
+    flex-shrink:0;font-size:12px;padding:8px 12px;
+  }
+  .sidebar .nav-btn.active{border-bottom-color:#5b9bd5;border-left-color:transparent}
+  .main{margin-left:0;padding:20px 12px}
+  .main h2{font-size:22px}
+  .main .page-sub{font-size:12px;margin-bottom:24px}
+  .module h3{font-size:16px}
+  .card{padding:16px 14px}
+  .card p{font-size:12px}
+  table{display:block;overflow-x:auto}
+  th,td{font-size:11px;padding:8px 10px;white-space:nowrap}
+  .category-grid{grid-template-columns:1fr}
+  .category-card{padding:14px 12px}
+  .category-card .cat-name{font-size:13px}
+  .category-card .cat-courses{font-size:11px}
+  .data-cards{grid-template-columns:1fr}
+  .data-card{padding:20px 16px}
+  .data-card .data-label{font-size:13px}
+  .data-card .data-placeholder{font-size:11px}
+  .career-grid{flex-wrap:wrap}
+  .career-card{min-width:120px;flex:1 1 40%}
+  .career-card .career-name{font-size:12px}
+  .career-card .career-course{font-size:10px}
+  .privacy-note{font-size:10px}
+  .back-btn{left:8px;top:8px;padding:6px 10px;font-size:12px}
+  .footer{margin-top:30px;font-size:10px}
+}
+</style>
+<script src="js/i18n.js"></script>
+</head>
+<body>
+
+<a href="迁移探索-无人机应用技术.html" class="back-btn" data-i18n-title="transfer_uav_student.back_to_teacher" data-i18n="transfer_uav_student.back_to_teacher">← 返回师资自学路径</a>
+
+<div class="sidebar" id="sidebar">
+  <h3 data-i18n="transfer_uav_student.sidebar_title">UAV 伴学子门户</h3>
+  <div class="nav-label" data-i18n="transfer_uav_student.sidebar_label">学生端导航</div>
+  <button class="nav-btn active" onclick="scrollToModule('module-courses')">
+    <span class="emoji">📚</span><span data-i18n="transfer_uav_student.nav_courses">课程导航</span>
+  </button>
+  <button class="nav-btn" onclick="scrollToModule('module-agent')">
+    <span class="emoji">🤖</span><span data-i18n="transfer_uav_student.nav_agent">Agent伴学</span>
+  </button>
+  <button class="nav-btn" onclick="scrollToModule('module-compare')">
+    <span class="emoji">🔄</span><span data-i18n="transfer_uav_student.nav_compare">方法论对照</span>
+  </button>
+  <button class="nav-btn" onclick="scrollToModule('module-growth')">
+    <span class="emoji">📊</span><span data-i18n="transfer_uav_student.nav_growth">学生成长</span>
+  </button>
+  <button class="nav-btn" onclick="scrollToModule('module-license')">
+    <span class="emoji">📋</span><span data-i18n="transfer_uav_student.nav_license">执照考核</span>
+  </button>
+  <button class="nav-btn" onclick="scrollToModule('module-career')">
+    <span class="emoji">💼</span><span data-i18n="transfer_uav_student.nav_career">就业出口</span>
+  </button>
+</div>
+
+<div class="main">
+
+  <h2 data-i18n="transfer_uav_student.page_heading"><span data-i18n="transfer_uav_student.page_heading_span">UAV 学生伴学</span>子门户</h2>
+  <div class="page-sub" data-i18n="transfer_uav_student.page_subtitle">课程导航 · Agent伴学 · 方法论对照 · 成长数据 · 执照体系 · 就业出口</div>
+
+  <!-- Module 1: Course Navigation -->
+  <div class="module" id="module-courses">
+    <h3><span class="emoji">📚</span><span data-i18n="transfer_uav_student.module_nav_title">UAV 课程分类导航</span></h3>
+    <div class="card">
+      <p style="color:#7fb8e0;font-size:14px;font-weight:600;margin-bottom:6px" data-i18n="transfer_uav_student.module_nav_sub">8门课程 · 4大类别</p>
+      <div class="category-grid">
+        <div class="category-card cat-orange">
+          <div class="cat-name"><span class="dot" style="background:#e67e22"></span><span data-i18n="transfer_uav_student.cat_control">操控类</span></div>
+          <div class="cat-courses">
+            <div data-i18n="transfer_uav_student.course_02">02-无人机操控与航迹规划</div>
+            <div data-i18n="transfer_uav_student.course_05">05-无人机模拟飞行</div>
+          </div>
+        </div>
+        <div class="category-card cat-purple">
+          <div class="cat-name"><span class="dot" style="background:#9b59b6"></span><span data-i18n="transfer_uav_student.cat_theory">理论类</span></div>
+          <div class="cat-courses">
+            <div data-i18n="transfer_uav_student.course_04">04-机械设计基础</div>
+            <div data-i18n="transfer_uav_student.course_07">07-空气动力学与飞行原理</div>
+          </div>
+        </div>
+        <div class="category-card cat-green">
+          <div class="cat-name"><span class="dot" style="background:#2ecc71"></span><span data-i18n="transfer_uav_student.cat_app">应用类</span></div>
+          <div class="cat-courses">
+            <div data-i18n="transfer_uav_student.course_08">08-农用植保无人机技术</div>
+            <div data-i18n="transfer_uav_student.course_09">09-无人机电力巡检技术</div>
+          </div>
+        </div>
+        <div class="category-card cat-blue">
+          <div class="cat-name"><span class="dot" style="background:#5b9bd5"></span><span data-i18n="transfer_uav_student.cat_data">数据类</span></div>
+          <div class="cat-courses">
+            <div data-i18n="transfer_uav_student.course_01">01-航空数据分析与处理</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Module 2: Agent Companion -->
+  <div class="module" id="module-agent">
+    <h3><span class="emoji">🤖</span><span data-i18n="transfer_uav_student.module_agent_title">Agent 伴学对照</span></h3>
+    <div class="card">
+      <p style="color:#7fb8e0;font-size:14px;font-weight:600;margin-bottom:12px" data-i18n="transfer_uav_student.module_agent_sub">学生端 9-Agent 角色与使用场景</p>
+      <table>
+        <thead>
+          <tr>
+            <th data-i18n="transfer_uav_student.col_agent">Agent</th>
+            <th data-i18n="transfer_uav_student.col_role">学生端角色</th>
+            <th data-i18n="transfer_uav_student.col_scene">使用场景</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="color:#f39c12;white-space:nowrap" data-i18n="transfer_uav_student.agent_s_name">Agent-S</td>
+            <td data-i18n="transfer_uav_student.agent_s_role">故障案例拆解</td>
+            <td data-i18n="transfer_uav_student.agent_s_scene">飞行事故分析→练习题生成</td>
+          </tr>
+          <tr>
+            <td style="color:#8e44ad;white-space:nowrap" data-i18n="transfer_uav_student.agent_i_name">Agent-I</td>
+            <td data-i18n="transfer_uav_student.agent_i_role">飞行应急模拟</td>
+            <td data-i18n="transfer_uav_student.agent_i_scene">失联/断电/撞鸟场景推演</td>
+          </tr>
+          <tr>
+            <td style="color:#9b59b6;white-space:nowrap" data-i18n="transfer_uav_student.agent_4_name">Agent 4</td>
+            <td data-i18n="transfer_uav_student.agent_4_role">航线规划助手</td>
+            <td data-i18n="transfer_uav_student.agent_4_scene">执照考试模拟题生成</td>
+          </tr>
+          <tr>
+            <td style="color:#2ecc71;white-space:nowrap" data-i18n="transfer_uav_student.agent_2_name">Agent 2</td>
+            <td data-i18n="transfer_uav_student.agent_2_role">知识点结构化</td>
+            <td data-i18n="transfer_uav_student.agent_2_scene">期末复习框架自动生成</td>
+          </tr>
+          <tr>
+            <td style="color:#e67e22;white-space:nowrap" data-i18n="transfer_uav_student.agent_3_name">Agent 3</td>
+            <td data-i18n="transfer_uav_student.agent_3_role">学习材料定制</td>
+            <td data-i18n="transfer_uav_student.agent_3_scene">机型拆解图示/飞行原理动画</td>
+          </tr>
+          <tr>
+            <td style="color:#3498db;white-space:nowrap" data-i18n="transfer_uav_student.agent_1_name">Agent 1</td>
+            <td data-i18n="transfer_uav_student.agent_1_role">法规标准查档</td>
+            <td data-i18n="transfer_uav_student.agent_1_scene">UAV适航法规/技术标准速查</td>
+          </tr>
+          <tr>
+            <td style="color:#e74c3c;white-space:nowrap" data-i18n="transfer_uav_student.agent_0_name">Agent 0</td>
+            <td data-i18n="transfer_uav_student.agent_0_role">学习路径审核</td>
+            <td data-i18n="transfer_uav_student.agent_0_scene">课程符合民航局执照标准</td>
+          </tr>
+          <tr>
+            <td style="color:#1abc9c;white-space:nowrap" data-i18n="transfer_uav_student.agent_5_name">Agent 5</td>
+            <td data-i18n="transfer_uav_student.agent_5_role">学习效果追踪</td>
+            <td data-i18n="transfer_uav_student.agent_5_scene">课程达成度+薄弱知识点诊断</td>
+          </tr>
+          <tr>
+            <td style="color:#16a085;white-space:nowrap" data-i18n="transfer_uav_student.agent_b_name">Agent-B</td>
+            <td data-i18n="transfer_uav_student.agent_b_role">职业发展助手</td>
+            <td data-i18n="transfer_uav_student.agent_b_scene">简历优化/面试模拟/行业报告</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Module 3: Comparison Table -->
+  <div class="module" id="module-compare">
+    <h3><span class="emoji">🔄</span><span data-i18n="transfer_uav_student.module_compare_title">高职 vs 研究生：方法论迁移对照</span></h3>
+    <div class="card">
+      <p style="color:#7fb8e0;font-size:14px;font-weight:600;margin-bottom:12px" data-i18n="transfer_uav_student.module_compare_sub">同一套 NFSC+Agent 方法论在不同教育层次的系统适配</p>
+      <table>
+        <thead>
+          <tr>
+            <th data-i18n="transfer_uav_student.compare_col_dim">对比维度</th>
+            <th data-i18n="transfer_uav_student.compare_col_gufei">固废课程（研究生）</th>
+            <th data-i18n="transfer_uav_student.compare_col_uav">UAV课程（高职大专）</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td data-i18n="transfer_uav_student.compare_dim_motivation">学习动机</td>
+            <td data-i18n="transfer_uav_student.compare_motivation_gufei">研究驱动 · 知识创造</td>
+            <td data-i18n="transfer_uav_student.compare_motivation_uav">就业驱动 · 技能获取</td>
+          </tr>
+          <tr>
+            <td data-i18n="transfer_uav_student.compare_dim_cognition">认知特点</td>
+            <td data-i18n="transfer_uav_student.compare_cognition_gufei">抽象思维成熟 · 理论推演</td>
+            <td data-i18n="transfer_uav_student.compare_cognition_uav">具象思维为主 · 动手实践</td>
+          </tr>
+          <tr>
+            <td data-i18n="transfer_uav_student.compare_dim_method">教学方法</td>
+            <td data-i18n="transfer_uav_student.compare_method_gufei">叙·框·境·创 四维递进</td>
+            <td data-i18n="transfer_uav_student.compare_method_uav">情境化+操作化简化</td>
+          </tr>
+          <tr>
+            <td data-i18n="transfer_uav_student.compare_dim_eval">评价方式</td>
+            <td data-i18n="transfer_uav_student.compare_eval_gufei">三轨产出（论文/设计/教改）</td>
+            <td data-i18n="transfer_uav_student.compare_eval_uav">技能考核+执照考试+竞赛</td>
+          </tr>
+          <tr>
+            <td data-i18n="transfer_uav_student.compare_dim_agent">Agent角色</td>
+            <td data-i18n="transfer_uav_student.compare_agent_gufei">学术研究辅助</td>
+            <td data-i18n="transfer_uav_student.compare_agent_uav">实操技能辅助</td>
+          </tr>
+          <tr>
+            <td data-i18n="transfer_uav_student.compare_dim_cycle">学习周期</td>
+            <td data-i18n="transfer_uav_student.compare_cycle_gufei">8周深度研讨</td>
+            <td data-i18n="transfer_uav_student.compare_cycle_uav">10学期递进训练</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Module 4: Student Growth Data -->
+  <div class="module" id="module-growth">
+    <h3><span class="emoji">📊</span><span data-i18n="transfer_uav_student.module_growth_title">学生成长数据</span></h3>
+    <div class="card">
+      <p style="color:#7fb8e0;font-size:14px;font-weight:600;margin-bottom:16px" data-i18n="transfer_uav_student.module_growth_sub">基于真实教学档案的实证数据（来源：教学日志/教务处统计）</p>
+      <div class="data-cards">
+        <div class="data-card">
+          <div class="data-icon">📋</div>
+          <div class="data-label" data-i18n="transfer_uav_student.growth_license_label">执照通过率</div>
+          <div class="data-placeholder" data-i18n="transfer_uav_student.growth_license_placeholder">[数据待补] — 按学期×课程×班级统计</div>
+        </div>
+        <div class="data-card">
+          <div class="data-icon">🏆</div>
+          <div class="data-label" data-i18n="transfer_uav_student.growth_competition_label">竞赛获奖</div>
+          <div class="data-placeholder" data-i18n="transfer_uav_student.growth_competition_placeholder">[数据待补] — 省级/国家级/国际级统计</div>
+        </div>
+        <div class="data-card">
+          <div class="data-icon">💼</div>
+          <div class="data-label" data-i18n="transfer_uav_student.growth_employment_label">就业去向</div>
+          <div class="data-placeholder" data-i18n="transfer_uav_student.growth_employment_placeholder">[数据待补] — 植保/航拍/巡检/测绘/物流</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Module 5: License System -->
+  <div class="module" id="module-license">
+    <h3><span class="emoji">📋</span><span data-i18n="transfer_uav_student.module_license_title">无人驾驶航空器执照考核体系</span></h3>
+    <div class="card">
+      <p style="color:#7fb8e0;font-size:14px;font-weight:600;margin-bottom:12px" data-i18n="transfer_uav_student.module_license_sub">ICAO国际标准 ↔ 民航局执照类别</p>
+      <table>
+        <thead>
+          <tr>
+            <th data-i18n="transfer_uav_student.license_col_type">执照类别</th>
+            <th data-i18n="transfer_uav_student.license_col_course">对应课程</th>
+            <th data-i18n="transfer_uav_student.license_col_method">考核方式</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td data-i18n="transfer_uav_student.license_type_vlos">视距内驾驶员</td>
+            <td data-i18n="transfer_uav_student.license_vlos_courses">02-操控与航迹规划 / 05-模拟飞行</td>
+            <td data-i18n="transfer_uav_student.license_vlos_method">理论考试+飞行实操</td>
+          </tr>
+          <tr>
+            <td data-i18n="transfer_uav_student.license_type_bvlos">超视距驾驶员</td>
+            <td data-i18n="transfer_uav_student.license_bvlos_courses">02-操控与航迹规划 / 07-空气动力学与飞行原理</td>
+            <td data-i18n="transfer_uav_student.license_bvlos_method">理论考试+综合实操</td>
+          </tr>
+          <tr>
+            <td data-i18n="transfer_uav_student.license_type_instructor">教员等级</td>
+            <td data-i18n="transfer_uav_student.license_instructor_courses">全部8门课程</td>
+            <td data-i18n="transfer_uav_student.license_instructor_method">飞行经验+教学能力评审</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Module 6: Career Paths -->
+  <div class="module" id="module-career">
+    <h3><span class="emoji">💼</span><span data-i18n="transfer_uav_student.module_career_title">五大就业方向</span></h3>
+    <div class="card">
+      <p style="color:#7fb8e0;font-size:14px;font-weight:600;margin-bottom:16px" data-i18n="transfer_uav_student.module_career_sub">无人机应用技术专业核心出口</p>
+      <div class="career-grid">
+        <div class="career-card">
+          <div class="career-icon">🌾</div>
+          <div class="career-name" data-i18n="transfer_uav_student.career_agri">农业植保</div>
+          <div class="career-course" data-i18n="transfer_uav_student.career_agri_course">对应课程08</div>
+        </div>
+        <div class="career-card">
+          <div class="career-icon">📷</div>
+          <div class="career-name" data-i18n="transfer_uav_student.career_photo">航空摄影</div>
+          <div class="career-course" data-i18n="transfer_uav_student.career_photo_course">对应课程01</div>
+        </div>
+        <div class="career-card">
+          <div class="career-icon">⚡</div>
+          <div class="career-name" data-i18n="transfer_uav_student.career_power">电力巡检</div>
+          <div class="career-course" data-i18n="transfer_uav_student.career_power_course">对应课程09</div>
+        </div>
+        <div class="career-card">
+          <div class="career-icon">🗺️</div>
+          <div class="career-name" data-i18n="transfer_uav_student.career_survey">测绘地理信息</div>
+          <div class="career-course" data-i18n="transfer_uav_student.career_survey_course">对应课程01/02</div>
+        </div>
+        <div class="career-card">
+          <div class="career-icon">📦</div>
+          <div class="career-name" data-i18n="transfer_uav_student.career_logistics">物流配送</div>
+          <div class="career-course" data-i18n="transfer_uav_student.career_logistics_course">对应课程02/05</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <p class="privacy-note" data-i18n="transfer_uav_student.footer_privacy_cn">本页内容基于UAV应用技术专业教学实践整理。学生成长数据来源于教学日志与教务处统计，经授权使用。</p>
+    <p class="privacy-note" data-i18n="transfer_uav_student.footer_privacy_en">Content based on UAV Applied Technology teaching practice. Student growth data from teaching logs and academic affairs, used with permission.</p>
+    <p style="margin-top:8px" data-i18n="common.copyright">© 黄正文（点暇斋）· 全部作品版权登记</p>
+  </div>
+
+</div>
+
+<script>
+(function(){
+  var navBtns = document.querySelectorAll('.sidebar .nav-btn');
+  var modules = document.querySelectorAll('.module');
+
+  function updateActiveNav(){
+    var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    var currentId = '';
+    modules.forEach(function(m){
+      var rect = m.getBoundingClientRect();
+      if(rect.top <= 140) currentId = m.id;
+    });
+    navBtns.forEach(function(btn){
+      var target = btn.getAttribute('onclick').match(/'([^']+)'/)[1];
+      btn.classList.toggle('active', target === currentId);
+    });
+  }
+
+  window.scrollToModule = function(id){
+    var el = document.getElementById(id);
+    if(!el) return;
+    navBtns.forEach(function(btn){
+      var target = btn.getAttribute('onclick').match(/'([^']+)'/)[1];
+      btn.classList.toggle('active', target === id);
+    });
+    el.scrollIntoView({behavior:'smooth',block:'start'});
+  };
+
+  window.addEventListener('scroll', updateActiveNav, {passive:true});
+
+  navBtns.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var target = btn.getAttribute('onclick').match(/'([^']+)'/)[1];
+      navBtns.forEach(function(b){b.classList.toggle('active',b===btn);});
+      var el = document.getElementById(target);
+      if(el) el.scrollIntoView({behavior:'smooth',block:'start'});
+    });
+  });
+})();
+</script>
+
+</body>
+</html>
